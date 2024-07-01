@@ -5,7 +5,7 @@ const PacienteSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    nombre: {
+    nombres: {
         type: String,
         required: true
     },
@@ -18,8 +18,29 @@ const PacienteSchema = new mongoose.Schema({
         required: true
     },
     genero: {
-        type: String
-    },    
+        type: String,
+        enum: ['m', 'f', 'no-specific'],
+        required: true,
+        default: 'no-specific'
+    },
+    etnia: {
+        type: String,
+        required: true,
+        default: 'No espeficado'
+    },
+    antecedentesMedicos: {
+        type: [{
+            enfermedad: String,
+            descripcion: String,
+            fechaDiagnostico: Date
+        }],
+        required: false,
+        default: [{
+            enfermedad: "Sin antecedentes",
+            descripcion: "",
+            fechaDiagnostico: null
+        }]
+    },
     fecha_registro: {
         type: Date,
         default: Date.now
