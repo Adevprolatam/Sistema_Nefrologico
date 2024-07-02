@@ -3,6 +3,8 @@ const models = {
     enfermedadesRenalesModel: require('./nosql/model.enfermedadRenal'),
     historialMedicoModel:require('./nosql/model.historialMedico'),
     sintomasModel:require('./nosql/model.sintomas'),
-    diagnosticoModel:require('./nosql/model.diagnostico')
+    diagnosticoModel:require('./nosql/model.diagnostico'),
+    examenSangreModel:require('./nosql/model.examenLab'),
+    visitaModel:require('./nosql/model.visita')
 }
 module.exports = models;

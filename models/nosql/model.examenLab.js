@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const ExamenLaboratorioSchema = new mongoose.Schema({
+const ExamenSangreSchema = new mongoose.Schema({
     paciente: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Paciente',
@@ -75,4 +75,4 @@ const ExamenLaboratorioSchema = new mongoose.Schema({
     versionKey: false
 });
 
-module.exports = mongoose.model('ExamenLaboratorio', ExamenLaboratorioSchema);
+module.exports = mongoose.model('ExamenSangre', ExamenSangreSchema);
