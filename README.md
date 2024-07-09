@@ -13,9 +13,9 @@ Este proyecto tiene como objetivo desarrollar un sistema de investigación en ne
 
 ## Requisitos
 
-- **Lenguajes de Programación:** JavaScript
-- **Bibliotecas y Frameworks:** TensorFlow, PyTorch, Scikit-learn, Pandas, NumPy, Matplotlib, Seaborn
-- **Bases de Datos:** MongoDB, PostgreSQL
+- **Lenguajes de Programación:** JavaScript , Phyton
+- **Bibliotecas y Frameworks:** TensorFlow, PyTorch, Scikit-learn, Pandas, NumPy, Matplotlib, Seaborn, React.
+- **Bases de Datos:** MongoDB 
 - **Otros:** Docker, Kubernetes
 
 ## Instalación
