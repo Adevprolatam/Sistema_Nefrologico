@@ -1,55 +1,13 @@
-const {pacienteModel} = require('../models/index');
+const { pacienteModel } = require('../models/index');
 const mongoose = require('mongoose');
 const ObjectId = mongoose.Types.ObjectId;
 
-
-const obtenerPacientesTodos = async (req,res)=>{
-    const {body} = req;
-    const data = await pacienteModel.find({});
-    
-    res.json({
-        msg:"Succesfull",
-        user: data
-    })
-}
-
-const obtenerPacienteByID = async(req, res) => {
-
-    const id = req.params.id;
-
+// Obtener todos los pacientes
+const obtenerPacientesTodos = async (req, res) => {
     try {
-        const paciente = await pacienteModel.findById(id)
+        const data = await pacienteModel.find({});
         res.json({
-            ok: true,
-            paciente
-        })
-        
-    } catch (error) {
-        console.log(error);
-        res.json({
-            ok: true,
-            msg: 'Hable con el administrador'
-        })
-    }
-}
-
-//REGISTRAR PACIENTE
-const crearPaciente = async (req, res) => {
-    const { body } = req;
-
-    try {
-        const registroExistente = await Verificar_Registro(body.ci);
-        if (registroExistente) {
-            return res.status(400).json({
-                ok: false,
-                msg: 'El paciente con esta cédula ya está registrado'
-            });
-        }
-
-        const data = await pacienteModel.create(body);
-
-        res.json({
-            msg: "Succesfull",
+            msg: "Success",
             user: data
         });
     } catch (error) {
@@ -61,7 +19,75 @@ const crearPaciente = async (req, res) => {
     }
 }
 
-//VERIFICAR SI EXISTE PACIENTE
+// Obtener paciente por ID
+const obtenerPacienteByID = async (req, res) => {
+    const id = req.params.id;
+
+    if (!ObjectId.isValid(id)) {
+        return res.status(400).json({
+            ok: false,
+            msg: 'ID no válido'
+        });
+    }
+
+    try {
+        const paciente = await pacienteModel.findById(id);
+        if (!paciente) {
+            return res.status(404).json({
+                ok: false,
+                msg: 'Paciente no encontrado'
+            });
+        }
+        res.json({
+            ok: true,
+            paciente
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Hable con el administrador'
+        });
+    }
+}
+
+// Registrar paciente
+const crearPaciente = async (req, res) => {
+    const { body } = req;
+    const { ci } = body;
+
+    // Validar que ci sea un número de exactamente 10 dígitos
+    if (!/^\d{10}$/.test(ci)) {
+        return res.status(400).json({
+            ok: false,
+            msg: 'El número de cédula debe ser un número de exactamente 10 dígitos'
+        });
+    }
+
+    try {
+        const registroExistente = await Verificar_Registro(ci);
+        if (registroExistente) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'El paciente con esta cédula ya está registrado'
+            });
+        }
+
+        const data = await pacienteModel.create(body);
+        res.json({
+            msg: "Success",
+            user: data
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Hable con el administrador'
+        });
+    }
+}
+
+// Verificar si existe paciente
 const Verificar_Registro = async (ci) => {
     try {
         const existePaciente = await pacienteModel.findOne({ ci: ci });
@@ -71,7 +97,8 @@ const Verificar_Registro = async (ci) => {
         throw new Error('Error al verificar el registro');
     }
 }
-//ACTUALIZAR DATOS
+
+// Actualizar datos del paciente
 const actualizarPaciente = async (req, res) => {
     const id = req.params.id;
     const { body } = req;
@@ -104,12 +131,10 @@ const actualizarPaciente = async (req, res) => {
         });
     }
 };
+
 module.exports = {
-    obtenerPacientesTodos, 
+    obtenerPacientesTodos,
     crearPaciente,
-    obtenerPacienteByID, 
+    obtenerPacienteByID,
     actualizarPaciente
-}
-
-
-
+};

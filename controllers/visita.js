@@ -5,7 +5,7 @@ const obtenerVisitasAll = async (req,res)=>{
     try {
         const data = await visitaModel.find()
         .populate('sintomas', 'nombre') 
-        .populate('paciente', 'ci nombre apellido genero edad etnia') 
+        .populate('paciente', 'ci nombre apellido genero edad etnia estado tipo_sangre') 
         .populate('examenes.sangre', 'tipo_examen resultado fecha_examen');  
         res.json({
             msg: "Successful",

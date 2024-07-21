@@ -27,7 +27,19 @@ const PacienteSchema = new mongoose.Schema({
     etnia: {
         type: String,
         required: true,
-        default: 'No espeficado'
+        default: 'No espeficado'  
+    },
+    tipo_sangre: {
+        type: String,
+        required: true,
+        enum: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-', 'N/A'],
+        default: 'N/A'
+    },    
+    estado: {
+        type: String,
+        required: true,
+        enum: ['Estable', 'Leve', 'Grave','Terminal'],
+        default: 'Estable'
     },
     antecedentesMedicos: {
         type: [{

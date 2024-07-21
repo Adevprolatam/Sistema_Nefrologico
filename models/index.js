@@ -5,6 +5,7 @@ const models = {
     sintomasModel:require('./nosql/model.sintomas'),
     diagnosticoModel:require('./nosql/model.diagnostico'),
     examenSangreModel:require('./nosql/model.examenLab'),
-    visitaModel:require('./nosql/model.visita')
+    visitaModel:require('./nosql/model.visita'),
+    enfermedadRenalModel:require('./nosql/model.enfermedadRenal')
 }
 module.exports = models;

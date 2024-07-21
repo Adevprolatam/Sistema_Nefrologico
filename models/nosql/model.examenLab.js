@@ -8,67 +8,68 @@ const ExamenSangreSchema = new mongoose.Schema({
     },
     tipo_examen: {
         type: String,
-        required: true
+        required: true,
+        default:'Sangre'
     },
     resultado: {
         creatinina_serica: {
-            type: Number,
+            type: String,
             required: true
         },
         tfg: {
-            type: Number,
+            type: String,
             required: true
         },
         proteina_orina: {
-            type: Number,
+            type: String,
             required: false
         },
         acido_urico: {
-            type: Number,
+            type: String,
             required: false
         },
         hba1c: {
-            type: Number,
+            type: String,
             required: false
         },
         colesterol_total: {
-            type: Number,
+            type: String,
             required: false
         },
         ldl: {
-            type: Number,
+            type: String,
             required: false
         },
         hdl: {
-            type: Number,
+            type: String,
             required: false
         },
         trigliceridos: {
-            type: Number,
+            type: String,
             required: false
         },
         biometria_hematica: {
             globulos_rojos: {
-                type: Number,
+                type: String,
                 required: false
             },
             hemoglobina: {
-                type: Number,
+                type: String,
                 required: false
             },
             hematocrito: {
-                type: Number,
+                type: String,
                 required: false
             },
             plaquetas: {
-                type: Number,
+                type: String,
                 required: false
             }
         }
     },
     fecha_examen: {
         type: Date,
-        required: true
+        default: Date.now
     }
 }, {
     timestamps: true,

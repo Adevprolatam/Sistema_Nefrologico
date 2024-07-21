@@ -3,10 +3,10 @@ const router = Router();
 
 const {
     obtenerDiagnoticosAll,
-    crearDiagnostico
-} = require("../controllers/diagnostico");
+    crearDiagnosticoDesdeVisita
+} = require("../controllers/tratamiento");
 
 //Todo: Route ITEMS 
 router.get("/", obtenerDiagnoticosAll);
-router.post("/",crearDiagnostico);
+router.post("/",crearDiagnosticoDesdeVisita);
 module.exports = router;

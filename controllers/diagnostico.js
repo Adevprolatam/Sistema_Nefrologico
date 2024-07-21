@@ -3,8 +3,8 @@ const {diagnosticoModel} = require('../models/index');
 
 const obtenerDiagnoticosAll = async (req,res)=>{
     const data = await diagnosticoModel.find()
-    .populate("paciente", 'nombre apellidos edad genero')
-    .populate("enfermedad_detectada", 'nombre clasificacion sintomas'); 
+    .populate("visita", 'signosVitales paciente examenes sintomas')
+    .populate("resultados.enfermedad_detectada", 'nombre tipo clasificacion sintomas'); 
 
     res.json({
         msg: "Successful",
