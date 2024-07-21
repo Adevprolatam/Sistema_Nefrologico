@@ -11,10 +11,7 @@ const anthropic = new Anthropic({
 // Función para procesar datos con la IA
 const procesarConIA = async (datos) => {
     try {
-        // Convertir datos a una cadena JSON
         const datosJson = JSON.stringify(datos);
-
-        // Llamada a la API usando el método correcto
         const response = await anthropic.messages.create({
             model: "claude-3-haiku-20240307",
             max_tokens: 1000,
@@ -27,10 +24,8 @@ const procesarConIA = async (datos) => {
             ]
         });
 
-        // Imprimir la respuesta completa para depuración
         console.log("Respuesta completa de la IA:", response);
 
-        // Verificar y retornar el contenido de la respuesta
         if (response.content && response.content[0] && response.content[0].text) {
             return response.content[0].text;
         } else {
@@ -41,6 +36,5 @@ const procesarConIA = async (datos) => {
         throw new Error('Error al comunicarse con la IA');
     }
 };
-
 
 module.exports = procesarConIA;

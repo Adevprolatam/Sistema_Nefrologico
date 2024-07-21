@@ -3,23 +3,23 @@ const mongoose = require('mongoose');
 const EnfermedadRenalSchema = new mongoose.Schema({
     nombre: {
         type: String,
-        required: true
+        required: false
     },
     clasificacion: {
         type: String,
-        required: true
+        required: false
     },
     tipo: {
         type: String,
-        required: true
+        required: false
     },
     sintomas: [{
         type: String,
-        required: true
+        required: false
     }],
     descripcion: {
         type: String,
-        required: true
+        required: false
     },
     tratamiento: {
         type: String,
