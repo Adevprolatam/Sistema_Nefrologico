@@ -1,0 +1,88 @@
+const axios = require('axios');
+
+// Configuración
+const OPENAI_API_KEY = 'su_clave_api_aquí';
+const OPENAI_API_ENDPOINT = 'https://api.openai.com/v1/engines/davinci-codex/completions';
+
+// Función para hacer una solicitud a la API de OpenAI
+async function queryOpenAI(prompt) {
+  try {
+    const response = await axios.post(OPENAI_API_ENDPOINT, {
+      prompt: prompt,
+      max_tokens: 250,
+      n: 1,
+      stop: null,
+      temperature: 0.7,
+    }, {
+      headers: {
+        'Authorization': `Bearer ${OPENAI_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+    });
+
+    return response.data.choices[0].text.trim();
+  } catch (error) {
+    console.error('Error al consultar la API de OpenAI:', error);
+    return null;
+  }
+}
+
+// Función para analizar datos del paciente con IA
+async function analizarDatosPaciente(datosPaciente) {
+  const ultimaVisita = datosPaciente.visitas[datosPaciente.visitas.length - 1];
+  const prompt = `
+    Analiza los siguientes datos renales de un paciente y proporciona una evaluación detallada:
+    
+    Paciente:
+    - Nombre: ${datosPaciente.paciente.nombre} ${datosPaciente.paciente.apellidos}
+    - Edad: ${datosPaciente.paciente.edad}
+    - Género: ${datosPaciente.paciente.genero}
+    
+    Antecedentes Médicos:
+    ${datosPaciente.paciente.antecedentesMedicos.map(a => `- ${a.enfermedad}: ${a.descripcion}`).join('\n')}
+    
+    Última Visita (${new Date(ultimaVisita.fechaVisita).toLocaleDateString()}):
+    - Presión Arterial: ${ultimaVisita.signosVitales.presionArterial}
+    - Frecuencia Cardíaca: ${ultimaVisita.signosVitales.frecuenciaCardiaca}
+    - Peso: ${ultimaVisita.signosVitales.peso} kg
+    
+    Síntomas: ${ultimaVisita.sintomas.join(', ')}
+    
+    Exámenes de Sangre:
+    - Hemoglobina: ${ultimaVisita.examenes.sangre.hemoglobina} g/dL
+    - Creatinina: ${ultimaVisita.examenes.sangre.creatinina} mg/dL
+    - Urea: ${ultimaVisita.examenes.sangre.urea} mg/dL
+    - Glucosa: ${ultimaVisita.examenes.sangre.glucosa} mg/dL
+    
+    Diagnóstico Actual: ${ultimaVisita.diagnostico.enfermedad}
+    
+    Por favor, proporciona una evaluación detallada del estado renal del paciente, posibles riesgos, y recomendaciones de tratamiento o seguimiento:
+  `;
+
+  const evaluacion = await queryOpenAI(prompt);
+  return evaluacion;
+}
+
+// Función principal para procesar los datos del paciente
+async function procesarDatosPaciente(datosPaciente) {
+  console.log('Analizando datos del paciente...');
+  const evaluacion = await analizarDatosPaciente(datosPaciente);
+  
+  if (evaluacion) {
+    console.log('Evaluación del IA:');
+    console.log(evaluacion);
+    
+    // Aquí puedes agregar código para guardar la evaluación en tu base de datos
+    // Por ejemplo:
+    // await actualizarEvaluacionPaciente(datosPaciente.paciente.id, evaluacion);
+  } else {
+    console.log('No se pudo obtener una evaluación.');
+  }
+}
+
+// Ejemplo de uso
+const datosPaciente = {
+  // Aquí va el objeto JSON que proporcionaste
+};
+
+procesarDatosPaciente(datosPaciente);
