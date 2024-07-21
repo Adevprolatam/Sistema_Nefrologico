@@ -8,10 +8,12 @@ const { check } = require('express-validator');
 const {
     obtenerPacientesTodos,
     obtenerPacienteByID, 
-    crearPaciente
+    crearPaciente,
+    actualizarPaciente
 } = require("../controllers/paciente");
 
 //Todo: Route Paciente
+
 router.get("/", obtenerPacientesTodos);
 router.post("/",
     [
@@ -27,6 +29,9 @@ router.post("/",
         validarCampos
     ], 
 crearPaciente);
+
 router.get("/:id",obtenerPacienteByID)
 
+//
+router.post("/:id",actualizarPaciente);
 module.exports = router;

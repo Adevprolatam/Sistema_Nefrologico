@@ -22,6 +22,7 @@ const crearExamenSangre = async (req,res)=>{
     })
 }
 
+
 module.exports = {
     obtenerExamenAll,
     crearExamenSangre

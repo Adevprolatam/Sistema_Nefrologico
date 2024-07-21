@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 const PacienteSchema = new mongoose.Schema({
     ci: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     nombres: {
         type: String,

@@ -27,7 +27,7 @@ const VisitaSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: 'ExamenSangre', 
             required: false   
-         } 
+        } 
     },
     diagnostico: {
         enfermedad: String,

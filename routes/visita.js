@@ -20,5 +20,5 @@ router.post("/", [
     check('signosVitales.peso', 'El valor del peso es obligatorio').isNumeric(),
     check('signosVitales.altura', 'El valor de la altura es obligatorio').isNumeric(),
     validarCampos
-],crearVisita);
+], crearVisita);
 module.exports = router;

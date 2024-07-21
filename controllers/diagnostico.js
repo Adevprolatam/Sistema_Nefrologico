@@ -22,6 +22,15 @@ const crearDiagnostico = async (req,res)=>{
     })
 }
 
+const estadoRenal = ()=>{
+    var datos ;
+    return datos;
+}
+
+const Progresion_Enfermedad= ()=>{
+    var datos ;
+    return datos;
+}
 module.exports = {
     obtenerDiagnoticosAll, 
     crearDiagnostico
