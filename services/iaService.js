@@ -1,14 +1,12 @@
 const Anthropic = require('@anthropic-ai/sdk');
-require('dotenv').config(); // Asegúrate de cargar las variables de entorno
+require('dotenv').config(); 
 
 const apiKey = process.env.ANTHROPIC_API_KEY;
 
-// Crear una instancia del cliente de Anthropic
 const anthropic = new Anthropic({
     apiKey: apiKey
 });
 
-// Función para procesar datos con la IA
 const procesarConIA = async (datos) => {
     try {
         const datosJson = JSON.stringify(datos);
