@@ -1,6 +1,9 @@
-const { diagnosticoModel, pacienteModel, enfermedadRenalModel, visitaModel } = require('../models/index');
+const { diagnosticoModel, visitaModel } = require('../models/index');
+const mongoose = require('mongoose');
+const ObjectId = mongoose.Types.ObjectId;
 const procesarConIA = require('../services/iaService'); 
 
+// Obtener Diagnostico por ID
 const obtenerDiagnoticosAll = async (req, res) => {
     try {
         const data = await diagnosticoModel.find()
@@ -19,11 +22,43 @@ const obtenerDiagnoticosAll = async (req, res) => {
     }
 };
 
+
+// Obtener Diagnostico por ID
+const obtenerDiagnosticoByID = async (req, res) => {
+    const id = req.params.id;
+
+    if (!ObjectId.isValid(id)) {
+        return res.status(400).json({
+            ok: false,
+            msg: 'ID no válido'
+        });
+    }
+
+    try {
+        const Diagnostico = await diagnosticoModel.findById(id);
+        if (!Diagnostico) {
+            return res.status(404).json({
+                ok: false,
+                msg: 'Diagnostico no encontrado'
+            });
+        }
+        res.json({
+            ok: true,
+            Diagnostico
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Hable con el administrador'
+        });
+    }
+}
+
+
 const crearDiagnosticoDesdeVisita = async (req, res) => {
     const { visita: visitaId } = req.body;
-
-    //console.log("ID de visita:", visitaId);
-
+    
     try {
         const visita = await visitaModel.findById(visitaId)
             .populate("paciente")
@@ -91,6 +126,7 @@ const crearDiagnosticoDesdeVisita = async (req, res) => {
             msg: "Successful",
             diagnostico: nuevoDiagnostico
         });
+
     } catch (error) {
         console.error("Error al crear el diagnóstico:", error.message);
         res.status(500).json({
@@ -102,5 +138,6 @@ const crearDiagnosticoDesdeVisita = async (req, res) => {
 
 module.exports = {
     obtenerDiagnoticosAll, 
-    crearDiagnosticoDesdeVisita
+    crearDiagnosticoDesdeVisita,
+    obtenerDiagnosticoByID
 };
