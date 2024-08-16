@@ -17,7 +17,7 @@ const procesarConIA = async (datos) => {
             messages: [
                 {
                     role: 'user',
-                    content: `Diagnostica al paciente con los siguientes parámetros: ${datosJson}`
+                    content: `Realiza un diagnóstico del paciente utilizando los siguientes parámetros: ${datosJson}. Además, proporciona el tratamiento recomendado y la enfermedad que podría estar padeciendo. También me gustaría que incluyas una descripción detallada del diagnóstico.`,
                 }
             ]
         });

@@ -132,9 +132,44 @@ const actualizarPaciente = async (req, res) => {
     }
 };
 
+
+const borrarPaciente = async (req, res = response) => {
+   
+    const id  = req.params.id;
+
+    try {
+        
+        const paciente = await pacienteModel.findById( id );
+
+        if ( !paciente ) {
+            return res.status(404).json({
+                ok: true,
+                msg: 'Paciente no encontrado por id',
+            });
+        }
+
+        await pacienteModel.findByIdAndDelete( id );
+
+        res.json({
+            ok: true,
+            msg: 'Paciente borrado'
+        }); 
+
+    } catch (error) {
+
+        console.log(error);
+
+        res.status(500).json({
+            ok: false,
+            msg: 'Hable con el administrador'
+        })
+    }
+
+}
 module.exports = {
     obtenerPacientesTodos,
     crearPaciente,
     obtenerPacienteByID,
-    actualizarPaciente
+    actualizarPaciente,
+    borrarPaciente
 };

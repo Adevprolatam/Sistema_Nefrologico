@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const ObjectId = mongoose.Types.ObjectId;
 const procesarConIA = require('../services/iaService'); 
 
-// Obtener Diagnostico por ID
+// Obtener Diagnostico ALL
 const obtenerDiagnoticosAll = async (req, res) => {
     try {
         const data = await diagnosticoModel.find()
@@ -78,7 +78,7 @@ const crearDiagnosticoDesdeVisita = async (req, res) => {
             return res.status(404).json({ msg: 'Visita no encontrada' });
         }
 
-        console.log("Datos de visita:", visita);
+        //console.log("Datos de visita:", visita);
 
         // Verificar y asegurar que `sintomas` no sea null y tiene datos
         const sintomasNombres = visita.sintomas && visita.sintomas.length > 0
@@ -95,7 +95,21 @@ const crearDiagnosticoDesdeVisita = async (req, res) => {
             : [];
 
         const datosIA = {
-            signosVitales: visita.signosVitales || {},  // Asegurarse de que sea un objeto vacío si no está disponible
+            paciente: {
+                edad: visita.paciente.edad || null,
+                genero: visita.paciente.genero || null,
+                etnia: visita.paciente.etnia || null,
+                tipo_sangre: visita.paciente.tipo_sangre || null,
+                estado: visita.paciente.estado || null,
+                antecedentesMedicos: visita.paciente.antecedentesMedicos && visita.paciente.antecedentesMedicos.length > 0 ? [
+                    {
+                        enfermedad: visita.paciente.antecedentesMedicos[0].enfermedad || null,
+                        descripcion: visita.paciente.antecedentesMedicos[0].descripcion || null,
+                        fechaDiagnostico: visita.paciente.antecedentesMedicos[0].fechaDiagnostico || null,
+                    }
+                ] : [],
+            },
+            signosVitales: visita.signosVitales || {},
             examenes: {
                 sangre: {
                     resultado: examenesSangre,
@@ -108,7 +122,7 @@ const crearDiagnosticoDesdeVisita = async (req, res) => {
             sintomas: sintomasNombres
         };
 
-        //console.log("Datos enviados a la IA:", datosIA);
+        console.log("Datos enviados a la IA:", datosIA);
 
         const respuestaIA = await procesarConIA(datosIA);
 
