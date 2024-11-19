@@ -54,6 +54,25 @@ const PacienteSchema = new mongoose.Schema({
             fechaDiagnostico: null
         }]
     },
+    historial_familiar: {
+        type: String,
+        required: false,
+        default: 'N/A'
+    },
+    notas_clinicas: {
+        type: [{
+            nota: String,
+            fecha: {
+                type: Date,
+                default: Date.now
+            }
+        }],
+        required: false,
+        default: [{
+            nota: "Sin notas",
+            fecha: Date.now()
+        }]
+    },    
     fecha_registro: {
         type: Date,
         default: Date.now

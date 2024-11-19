@@ -101,6 +101,7 @@ const crearDiagnosticoDesdeVisita = async (req, res) => {
                 etnia: visita.paciente.etnia || null,
                 tipo_sangre: visita.paciente.tipo_sangre || null,
                 estado: visita.paciente.estado || null,
+                historial_familiar: visita.paciente.historial_familiar || null,
                 antecedentesMedicos: visita.paciente.antecedentesMedicos && visita.paciente.antecedentesMedicos.length > 0 ? [
                     {
                         enfermedad: visita.paciente.antecedentesMedicos[0].enfermedad || null,
@@ -108,6 +109,10 @@ const crearDiagnosticoDesdeVisita = async (req, res) => {
                         fechaDiagnostico: visita.paciente.antecedentesMedicos[0].fechaDiagnostico || null,
                     }
                 ] : [],
+                notasClinicas: visita.paciente.notas_clinicas && visita.paciente.notas_clinicas.length > 0 ? visita.paciente.notas_clinicas.map(nota => ({
+                    contenido: nota.nota || 'Sin contenido',
+                    fecha: nota.fecha ? new Date(nota.fecha).toLocaleDateString() : 'Sin fecha',
+                })) : [],
             },
             signosVitales: visita.signosVitales || {},
             examenes: {
